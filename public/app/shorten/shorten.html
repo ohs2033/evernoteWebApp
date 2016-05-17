@@ -1,0 +1,19 @@
+<div id='creator'>
+	 
+
+	<form name="signinForm" ng-submit='addLink()' >
+		<input class='text' type="text" ng-model='link.url' ng-keydown='validateUrl()'/>
+		<button> Shorten </button>
+		<div class='warning'>
+			{{warningWord}} 
+		</div>
+	</form>
+	<div class='spinnerContainer'>
+		
+	</div>
+
+	<div class='message'></div>
+</div>
+
+
+

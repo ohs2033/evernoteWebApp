@@ -8,9 +8,26 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var oauth = require('./routes/oauth');
 
+var mongoose = require('mongoose');
+
+var router = require('./routes/routes.js')
+var session = require('express-session');
 
 var app = express();
 
+//mognodb connection
+var mongoURI = "mongodb://localhost/evernote";
+var MongoDB = mongoose.connect(mongoURI).connection;
+MongoDB.on('error', function(err) { console.error('ERROR:',err.message); });
+MongoDB.once('open', function() {
+  console.log("mongodb connection open");
+});
+
+
+
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
 // view engine setup
 
 // uncomment after placing your favicon in /public
@@ -22,9 +39,20 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/users', routes);
-app.use('/oauth', oauth);
+app.use(session({
+  secret: 'keyboard cat',
+  resave: true, //focus sessions to be saved session store during the request
+  saveUninitialized: true
+}))
 
+
+// app.use('/users', routes);
+// app.use('/oauth', oauth);
+
+// app.use('/signin',);
+// app.use('/signup',)
+router(app, express);
+// 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -35,19 +63,19 @@ app.use(function(req, res, next) {
 
 
 
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
+// if (app.get('env') === 'development') {
+//   app.use(function(err, req, res, next) {
+//     res.status(err.status || 500);
+//     res.redirect('/error');
+//   });
+// }
 
 app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.end('/error');
+  if(err) {
+    console.error(err);
+    res.status(err.status || 500);
+    res.end(err);
+  }
 });
 
 

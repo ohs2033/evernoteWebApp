@@ -1,0 +1,18 @@
+<div id='container'>
+  <input type='text' ng-model='keyword'>
+    {{keyword}}
+  <div ng-repeat='link in data.links| filter:keyword' class='link'> 
+	<img src='../../assets/redirect_icon.png'/>
+	<div>
+		{{link.title}} 
+	</div>
+	<div class='visits'>
+  		{{link.visits}}
+  	</div>
+  	 <span class='original'>{{link.url}}</span>
+  	<div class=''>
+  		<a href='/{{link.code}}'  > http://localhost:3000/{{link.code}} </a>
+  	</div>
+  	
+  </div>
+</div>
