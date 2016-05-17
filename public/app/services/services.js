@@ -29,18 +29,11 @@ angular.module('shortly.services', [])
 
 })
 .factory('Auth', function ($http, $location, $window) {
-  // Don't touch this Auth service!!!
-  // it is responsible for authenticating our user
-  // by exchanging the user's username and password
-  // for a JWT from the server
-  // that JWT is then stored in localStorage as 'com.shortly'
-  // after you signin/signup open devtools, click resources,
-  // then localStorage and you'll see your token from the server
+
   var signin = function (user) {
     return $http({
-      method: 'POST',
+      method: 'GET',
       url: '/api/users/signin',
-      data: user
     })
     .then(function (resp) {
       return resp.data.token;
@@ -49,9 +42,8 @@ angular.module('shortly.services', [])
 
   var signup = function (user) {
     return $http({
-      method: 'POST',
+      method: 'GET',
       url: '/api/users/signup',
-      data: user
     })
     .then(function (resp) {
       return resp.data.token;

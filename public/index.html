@@ -1,98 +1,53 @@
-<html lang="en">
+<!--html page to run this ampp by using AgularJS-->
+
+<!DOCTYPE html>
+<html ng-app='shortly'>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
-   <script src="javascripts/jsOAuth-1.3.7.min.js" type="text/javascript"></script>
-   <script src="javascripts/evernote-sdk-minified.js" type="text/javascript"></script>
-    <title>Don't forget.</title>
-	
-
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-	<script src="https://code.jquery.com/jquery-1.12.3.js" integrity="sha256-1XMpEtA4eKXNNpXcJ1pmMPs8JV+nwLdEqwiJeCQEkyc=" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
-  <!--evernote API-->
+    <meta charset="utf-8" />
+    <title>Shortly</title>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
 
 
-    <link href="style.css" rel="stylesheet" type = "text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+
+ 
+
+
+
+
   </head>
-
   <body>
-
-
-    <nav class="navbar navbar-fixed-top navbar-inverse">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle aaa</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">Don't Forget</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">입력</a></li>
-            <li><a href="#about">나의 지식 목록</a></li>
-          </ul>
-        </div><!-- /.nav-collapse -->
-      </div><!-- /.container -->
-    </nav><!-- /.navbar -->
+    <h1>Shortly</h1>
+    <!-- the ng-view directive is  where our templates will be loaded into when naviagted to -->
+    <div class='navigation' ng-controller='SignoutController'>
+      <ul> 
+        <li> <a href='/#/links'> Links </a> </li>
+        <li> <a href='/#/shorten'> shorten </a> </li>
+        <li ng-click='signout()'><a> Sign Out </a> </li>
+      </ul>
+    </div>
 
 
 
-    <div class="container">
-      <div class="row row-offcanvas row-offcanvas-right">
-        <div class="col-xs-12 col-sm-9 col-md-4" class = 'recentMemo'>
-          <div class="jumbotron">
-           <h3>어제</h3>
-             <ul>
-              <li> 목록 </li>
-              <li> 목록 </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-9 col-md-4">
-          <div class="jumbotron" class = 'recentMemo'>
-            <h3>이틀 전</h3>
-            <ul>
-              <li> 목록 </li>
-              <li> 목록 </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-9 col-md-4">
-         <div class="jumbotron" class = 'recentMemo'>
-            <h3>3일 전 </h3>
-             <ul>
-              <li> 목록 </li>
-              <li> 목록 </li>
-            </ul>
-         </div>
-     	</div>
-      </div><!--/row-->
-      <footer>
-        <p>&copy; Company 2014</p>
-      </footer>
-
-    </div><!--/.container-->
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 
 
-    <script src ='javascripts/app.js'></script>
+
+
+    <div ng-view> </div>
+
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular-route/angular-route.js"></script>
+
+    <script src="app/auth/auth.js"></script>
+    <script src="app/links/links.js"></script>
+    <script src="app/shorten/shorten.js"></script>
+    <script src="app/services/services.js"></script>
+    <script src="app/app.js"></script>
   </body>
 </html>

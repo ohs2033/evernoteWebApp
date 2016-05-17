@@ -2,9 +2,33 @@ var noteController = require('./controller/noteController.js');
 var userController = require('./controller/userController.js');
 
 module.exports = function (app, express) {
-  app.post('/api/notes/finish', noteController.notePhaseUp);
-  app.post('/api/notes/create', noteController.noteStoring);
-  app.post('/api/notes/renew', noteController.renewPhase);
+
+
+  app.use('/', function(req,res,next){
+    if(req.url==='/'){
+      res.end('hi');
+    }
+    next();
+  })
+
+  app.get('/login', function(req, res, next){
+    res.end('login');
+  })
+
+
+  app.get('/aps', function(req,res,next){
+    console.log('basic /');
+    if(req.session.accessToken){
+      console.log(req.session.accessToken);
+      res.end();
+    }else{
+      console.log('no access token yet.');
+      res.end();
+    }
+  });
+  app.get('/api/notes/finish', noteController.notePhaseUp);
+  app.get('/api/notes/create', noteController.noteStoring);
+  app.get('/api/notes/renew', noteController.renewPhase);
   app.get('/api/notes/:id', noteController.openOneNote);
 
   app.get('/api/users/signin', userController.signin);

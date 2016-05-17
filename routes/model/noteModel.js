@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var NoteSchema = new mongoose.Schema({
 	guid: String,
-	user_id: { type: Schema.Types.ObjectId, ref: 'User' },
+	user_id: String,
 	update_date: String,
 	create_date: String,
 	title: String,

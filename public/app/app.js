@@ -26,8 +26,11 @@ angular.module('shortly', [
       controller: 'ShortenController',
       authenticate: true
     })
+    .when('/main', {
+      templateUrl: 'app/main/main.html'
+    })
     .otherwise({
-      redirectTo : '/links'
+      redirectTo : '/'
     })
 
 

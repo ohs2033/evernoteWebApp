@@ -14,9 +14,6 @@ var getOauthVerifier = function(url) {
 
 
 var oauth = function (req, res, next, callbackUrl) {	
-	    console.log('session is',req.session)
-		console.log('user Aouth route.');
-		console.log('callbackURl is :', callbackUrl);
 		  var callback = callbackUrl;
 		  client.getRequestToken(callback, function(err, oauthToken, oauthSecret, results){
 		    if(err) {
@@ -29,16 +26,13 @@ var oauth = function (req, res, next, callbackUrl) {
 		      var authorizeUrl = client.getAuthorizeUrl(oauthToken);
 		      res.redirect(authorizeUrl);
 		    }
-
 		});
-
 }
 
 module.exports = {
 	
 	signin: function (req, res, next) {
 		console.log('sign in..');
-		console.log(req.session.oauthToken);
 		if(req.session.oauthToken){
 			//after get authtoken.
 			var parsedUrl = url.parse(req.url);
@@ -69,7 +63,8 @@ module.exports = {
 			      			
 			      			else if(result.length>0) {
 			      				console.log('the result is..', result);
-			      				res.end(JSON.stringify({token: oauthAccessToken}));// **this needs to be jwtted.	
+			      				req.session.accessToken = oauthAccessToken;
+			      				res.redirect('/aps');// **this needs to be jwtted.	
 			      			}else{
 			      				res.end('no user. please sign up')
 			      			}
@@ -88,7 +83,6 @@ module.exports = {
 	signup: function (req, res, next) {
 
 		if(req.session.oauthToken){
-
 			var parsedUrl = url.parse(req.url);
 			client.getAccessToken( //get AccessToken with OAuth token.
 			  req.session.oauthToken, 
@@ -105,12 +99,18 @@ module.exports = {
 			      	token: oauthAccessToken,
 			      	sandbox:true
 			      })
+			      
+			      //** session save.**//
+			      req.session.accessToken = oauthAccessToken;
+
+
+
 			      var userStore = accessedClient.getUserStore();
 			      var noteStore = accessedClient.getNoteStore();
 
 
 			      	var filter = new Evernote.NoteFilter();
-
+			      	filter.words = "updated:day-7"
 			      	console.log('filter is..',filter);
 
 
@@ -119,6 +119,7 @@ module.exports = {
 			      	resultSpec.includeContentLength = true;
 			      	resultSpec.includeCreated = true;
 			      	resultSpec.includeAttributes = true;
+			      	resultSpec.includeUpdated = true;
 			      	
 			      	//get Note Data
 			      	noteStore.findNotesMetadata(filter, 0, 100, resultSpec, function(err, notesMeta) {
@@ -131,7 +132,8 @@ module.exports = {
 			      	      var noteGuids = [];
 			      	      for (var i in notesMeta.notes) {
 
-			      	       noteGuids.push(notesMeta.notes[i]['guid']);
+			      	      console.log(notesMeta.notes[i].title);
+			      	      noteGuids.push(notesMeta.notes[i]['guid']);
 			      	       // var note = noteStore.getNote(
 			      	       //    noteGuid,
 			      	       //    true, true, true, true,
@@ -144,6 +146,9 @@ module.exports = {
 			      	       //  })                      
 			      	      }
 			      	      userStore.getUser( function (err, user){
+			      	      	//** got user id
+			      	      	req.session.uid = user.id;
+
 			      	      	if(err)  return console.log(err);
 			      	      	User.find({
 			      	      		id: user.id
@@ -151,32 +156,27 @@ module.exports = {
 			      	      		function(err, result){
 			      	      			if(err) return console.error(err);
 			      	      			else if(result.length>0) {
+
 			      	      				console.log('already signed up..', result);
-			      	      				res.end(JSON.stringify({token: oauthAccessToken}));// **this needs to be jwtted.	
+			      	      				res.redirect('/api/notes/renew');;// **this needs to be jwtted.	
 			      	      			}else{
+
+			      	      				console.log('creating users..');
 			      	      				new User({
 			      	      					id: user.id,
 			      	      					listNotes: noteGuids
 			      	      				}).save(function(err, result){
 			      	      					if(err) return console.error(err);
 			      	      					console.log('successfully saved.');
-			      	      					console.log(result);
-			      	      				})
-
-			      	      			}
+			      	      					res.redirect('/api/notes/create')
+			      	      			})
+			      	      		}
 			      	      	})
-			      	      	
 			      	      })//getUser
-
-
 			      	    }
 			      	});
 			      	//get Note Data
-
 			      	//get User Data.
-				     
-
-
 				} 
 			  }
 			);
@@ -189,7 +189,9 @@ module.exports = {
 	signout: function (req, res, next){
 		req.session.oauthToken = null;
 		req.session.oauthSecret = null;
+		req.session.accessToken = null;
 		res.redirect('/');
+
 	},
 	checkAuth: function (req, res, next) {
 

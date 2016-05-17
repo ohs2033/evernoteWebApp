@@ -36,7 +36,14 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
+app.use(function(req, res, next){
+   console.log("CORS config..")
+   res.header("Access-Control-Allow-Origin", "*");
+   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+   res.header("Access-Control-Expose-Headers", "tokens")
+   next();
+});
 
 
 app.use(session({
@@ -44,6 +51,21 @@ app.use(session({
   resave: true, //focus sessions to be saved session store during the request
   saveUninitialized: true
 }))
+
+
+app.use('/mainpage', function(req, res, next){
+   console.log('token in mainpage ', req.session)
+    if(req.session.accessToken){
+      console.log('got access token for static page');
+      next();
+    }else{
+      console.log('no access token.');
+      res.redirect('/login')
+    }//first middleware
+  }, express.static(path.join(__dirname, 'public'))
+)
+
+
 
 
 // app.use('/users', routes);
