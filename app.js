@@ -96,7 +96,7 @@ app.use(function(err, req, res, next) {
   if(err) {
     console.error(err);
     res.status(err.status || 500);
-    res.end(err);
+    res.end(JSON.stringify(err));
   }
 });
 
