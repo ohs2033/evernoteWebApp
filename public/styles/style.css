@@ -1,6 +1,13 @@
+
+
+@import url(http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+@import url(http://fonts.googleapis.com/earlyaccess/notosanslycian.css);
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+
 body {
-  margin: 0;
-  margin-top: 10px;
+  margin: 20px;
+  margin-top: 0px;
   font-family: arial, sans-serif;
 }
 
@@ -11,14 +18,22 @@ a {
 }
 
 h1 {
+  position:relative;
+  font-family: 'Hanna', serif;
   font-style: italic;
   margin-bottom: 10px;
 }
+h1 span {
+  font-color: grey;
+  font-size : 15px;
+}
 
 .navigation {
+  font-family: 'Hanna', serif;
   width: 100%;
   height: 40px;
-  background-color: #eee;
+  margin-bottom:10px;
+  /*background-color: #eee;*/
 }
 
 .navigation ul {
@@ -28,20 +43,21 @@ h1 {
 }
 
 .navigation li {
-  float: left;
+  float: right;
+
 }
 
 .navigation li a {
   width: 100px;
-  height: 20px;
   line-height: 20px;
   padding: 10px;
   display: block;
   text-align: center;
+   -webkit-transition: background-color 0.5s, font-size 0.5s;
+  
 }
 
 .navigation li a:hover {
-  background-color: #ddd;
 }
 
 .navigation li a.selected {
@@ -58,10 +74,11 @@ h1 {
   margin-bottom: 5px;
   padding: 5px;
   min-height: 50px;
+  -webkit-transition: background-color 0.5s;
 }
 
 .link:hover {
-  background-color: #efe;
+  background-color: white;
 }
 
 .link img {
@@ -149,4 +166,102 @@ input[type=url]:focus {
 .warning {
   color : red;
 }
+
+.jumbotron {
+  overflow: scroll;
+  font-family: 'Noto Sans Lycian', sans-serif;
+  padding-top: 10px;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  -webkit-transition: background-color 0.5s;
+
+
+  height: 500px;
+}
+
+.jumbotron:hover {
+  background-color:white;
+}
+
+.jumbotron h3{
+  width:100%;
+  /*font-family: 'Nanum Brush Script', serif;*/
+  color:#839abe;
+  display:block;
+  height:40px;
+  padding:5px;
+  text-align: center;
+  background-color:white;
+  border-radius: 5px;
+}
+.jumbotron ul{
+  width:100%;
+  padding-left:0px;
+}
+.jumbotron ul li{
+  cursor: pointer;
+  font-family: 'Nanum Gothic Coding', serif;
+  list-style-type:none;
+  height:40px;
+  padding:5px;
+  text-align: center;
+  -webkit-transition: background-color 0.5s;
+  border-radius: 5px;
+}
+.jumbotron ul li:hover{
+
+  background-color:#839abe; 
+}
+
+
+#repeating {
+
+  padding:20px;
+  background-color:rgba(255, 255, 255, 0.3);
+  position:fixed;
+  margin:auto;
+  width:60%;
+  left:20%;
+  right:20%;
+  top:10%;
+  bottom:10%;
+  overflow: scroll;
+  border: solid grey 0.5px;
+  border-radius: 5px;
+  -webkit-transition: 0.1s, background-color 0.5s;
+}
+#repeating h1{
+  text-align: center;
+}
+#repeating:hover {
+  background-color: white;
+}
+
+#exit{
+  cursor:pointer;
+  font-size:25px;
+  position:fixed;
+  top:15%;
+  right:25%;
+  
+  -webkit-transition: color 0.5s, font-size 0.5s;
+}
+#exit:hover{
+  color:red;
+}
+
+#finish{
+  padding:1px;
+  height:50px;
+  text-align:center;
+  cursor:pointer;
+  -webkit-transition: height 0.5s,color 0.5s, background-color 0.5s;
+}
+
+#finish:hover {
+  height:70px;
+  background-color:black;
+  color:white;
+}
+
 

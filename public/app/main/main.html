@@ -1,35 +1,54 @@
-  <div class="container">
-      <div class="row row-offcanvas row-offcanvas-right">
-        <div class="col-xs-12 col-sm-9 col-md-4" class = 'recentMemo'>
-          <div class="jumbotron">
-           <h3>어제</h3>
-             <ul>
-              <li> 목록 </li>
-              <li> 목록 </li>
-            </ul>
-          </div>
+<div class="container">
+    <div class="row row-offcanvas row-offcanvas-right">
+        <div class="col-xs-12 col-sm-9 col-md-4" class='recentMemo'>
+            <div class="jumbotron">
+                <h3>Phase 1</h3>
+                <ul>
+                    <li ng-repeat='note in phase1' ng-click='onClick(note.guid)'> {{note.title}} </li>
+                </ul>
+            </div>
         </div>
         <div class="col-xs-12 col-sm-9 col-md-4">
-          <div class="jumbotron" class = 'recentMemo'>
-            <h3>이틀 전</h3>
-            <ul>
-              <li> 목록 </li>
-              <li> 목록 </li>
-            </ul>
-          </div>
+            <div class="jumbotron" class='recentMemo'>
+                <h3>Phase 2</h3>
+                <ul>
+                    <li ng-repeat='note in phase2' ng-click='onClick(note.guid)'> {{note.title}} </li>
+                </ul>
+            </div>
         </div>
         <div class="col-xs-12 col-sm-9 col-md-4">
-         <div class="jumbotron" class = 'recentMemo'>
-            <h3>3일 전 </h3>
-             <ul>
-              <li> 목록 </li>
-              <li> 목록 </li>
-            </ul>
-         </div>
-     	</div>
-      </div><!--/row-->
-      <footer>
-        <p>&copy; Company 2014</p>
-      </footer>
+            <div class="jumbotron" class='recentMemo'>
+                <h3>Phase 3 </h3>
+                <ul>
+                    <li ng-repeat='note in phase3' ng-click='onClick(note.guid)'> {{note.title}} </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--/row-->
+</div>
+<div id="repeating" style="visibility : hidden;">
+    <h1></h1>
+    <span id='exit'>X</span>
+    <span id='bodyRepeat'></span>
+    <div id='finish' ng-click='finishFunc()'>
+        <h3>FINISH<h3></div>
 
+      </div>
+
+      <script> 
+      $('.container').on('click', function(evt){
+        if($("#repeating").css('visibility')!=='hidden'){
+          $("#repeating").css({'visibility':'hidden'});
+        }
+        
+      })
+      $('#exit').on('click', function(){
+        $("#repeating").css({'visibility':'hidden'});
+
+      })
+      </script>
+      <footer>
+        <p>&copy; 오현수 2016</p>
+      </footer>
     </div><!--/.container-->

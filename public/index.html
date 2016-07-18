@@ -6,48 +6,28 @@
     <meta charset="utf-8" />
     <title>Shortly</title>
     <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="styles/style.css" />
-
-
+    <!--this is for convert evernote .enml to .html-->
+    <script src="https://cdn.rawgit.com/berryboy/enml-js/master/lib/xml-writer.js"></script>
+    <script src="https://cdn.rawgit.com/berryboy/enml-js/master/lib/xml-parser.js"></script>
+    <script src="https://cdn.rawgit.com/berryboy/enml-js/master/enml.js"></script>
+    <!-- enml to html-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
-
- 
-
-
-
-
+  <link rel="stylesheet" type="text/css" href="styles/style.css" />
   </head>
-  <body>
-    <h1>Shortly</h1>
-    <!-- the ng-view directive is  where our templates will be loaded into when naviagted to -->
-    <div class='navigation' ng-controller='SignoutController'>
-      <ul> 
-        <li> <a href='/#/links'> Links </a> </li>
-        <li> <a href='/#/shorten'> shorten </a> </li>
-        <li ng-click='signout()'><a> Sign Out </a> </li>
-      </ul>
-    </div>
 
-
-
-
-
-
-
-
-
-    <div ng-view> </div>
-
+    <body>
+      <h1> Forem <span>&nbsp; Remember your notes</span></h1>
+      <div class='navigation'>
+        <ul> 
+          <li ><a href='/api/users/signout'> Sign Out </a> </li>
+        </ul>
+      </div>
+    <div ng-view></div>
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular-route/angular-route.js"></script>
-
-    <script src="app/auth/auth.js"></script>
-    <script src="app/links/links.js"></script>
-    <script src="app/shorten/shorten.js"></script>
-    <script src="app/services/services.js"></script>
+    <script src="app/main/main.js"></script>
     <script src="app/app.js"></script>
   </body>
 </html>

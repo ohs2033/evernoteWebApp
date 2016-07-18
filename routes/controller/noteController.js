@@ -4,7 +4,6 @@ var User = require('../model/userModel');
 var Note = require('../model/noteModel');
 var Promise = require('bluebird');
 module.exports = {
-
 	noteStoring : function(req, res, next){
 		console.log('noteStoring..');
 		var accessedClient = new Evernote.Client({
@@ -12,14 +11,14 @@ module.exports = {
 	      	sandbox: true
 	    });
 		User.findOne({ id: req.session.uid }, function (err, result) {
-			console.log(result);
+			console.log('the user is..!',result);
 			var noteStore = accessedClient.getNoteStore();
 			var asyncGetNote = []
-			var guids = result['listNotes']
+			var guids = result.listNotes;
 			console.log(guids);
 			for(var i =0; i<guids.length; i++){
 				asyncGetNote.push(
-					noteStore.getNote(guids[0], true, true, true, true, function(err, result){
+					noteStore.getNote(guids[i], true, true, true, true, function(err, result){
 						if(err) console.error(err)
 						// console.log(result);
 						//create notes.
@@ -30,7 +29,7 @@ module.exports = {
 							create_date: result.created,
 							title: result.title,
 							content: result.content,
-							resource: result.resources,
+							resources: JSON.stringify(result.resources),
 							phase: '0',
 							activate: true
 						}).save(function(err,result){
@@ -59,7 +58,30 @@ module.exports = {
 
 	},
 	notePhaseUp : function(req, res, next){
-		//if
+		console.log(req.body);
+		console.log(req.session.uid);
+		Note.findOne({
+			user_id: req.session.uid,
+			guid : req.body.guid
+		}, function(err, result){
+			if(err) console.error(err);
+			console.log(result);
+			console.log(result.phase);
+			var nextPhase = parseInt(result.phase);
+			console.log(nextPhase);
+			nextPhase++;
+			console.log('nextPhase is',nextPhase);
+			Note.update({
+				user_id: req.session.uid,
+				guid : req.body.guid
+
+			},{
+				phase: nextPhase.toString()
+			},{},function(err, result){
+				if(err) console.error(err)
+					res.end(JSON.stringify(result))
+			})
+		})
 	},
 	renewPhase : function(req, res, next){
 		console.log('renewphase', req.session);
@@ -67,6 +89,16 @@ module.exports = {
 
 	},
 	openOneNote : function(req, res, next){
+
+	},
+	getNote: function(req, res, next){
+		console.log('getting note.')
+		console.log(req.session);
+		Note.find({
+			user_id : req.session.uid
+		}, function(err, result){
+			res.json(result);
+		})
 
 	}
 };
